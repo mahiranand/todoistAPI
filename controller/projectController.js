@@ -11,56 +11,62 @@ const getAllProjects = (req, res) => {
 };
 
 const getProjectById = async (req, res) => {
-  try {
-    const project = await Project.findByPk(req.params.id);
-    res.json(project);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: err.message });
-  }
+  Project.findByPk(req.params.id)
+    .then((project) => {
+      res.json(project);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err.message });
+    });
 };
 
 const createProject = async (req, res) => {
-  try {
-    const project = await Project.create(req.body);
-    res.json(project);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: err.message });
-  }
+  Project.create(req.body)
+    .then((project) => {
+      res.json(project);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err.message });
+    });
 };
 
 const updateProject = async (req, res) => {
-  try {
-    const project = await Project.findByPk(req.params.id);
-    await project.update(req.body);
-    res.json(project);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: err.message });
-  }
+  Project.findByPk(req.params.id)
+    .then((project) => {
+      return project.update(req.body);
+    })
+    .then((project) => {
+      res.json(project);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err.message });
+    });
 };
 
 const deleteProject = async (req, res) => {
-  try {
-    const project = await Project.findByPk(req.params.id);
-    await project.destroy();
-    res.json(project);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: err.message });
-  }
+  Project.findByPk(req.params.id)
+    .then((project) => {
+      return project.destroy();
+    })
+    .then(() => {
+      res.end();
+    })
+    .catch((err) => {
+      res.status(404).json({ message: err.message });
+    });
 };
 
 const deleteAllProjects = async (req, res) => {
-  try {
-    const projects = await Project.findAll();
-    await projects.forEach((project) => project.destroy());
-    res.json(projects);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: err.message });
-  }
+  Project.destroy({
+    where: {},
+    truncate: false,
+  })
+    .then(() => {
+      res.end();
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err.message });
+    });
 };
 
 export {
