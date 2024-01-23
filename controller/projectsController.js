@@ -10,9 +10,11 @@ const getAllProjects = (req, res) => {
     });
 };
 
-const getProjectById = async (req, res) => {
+const getProjectById = (req, res) => {
   Project.findByPk(req.params.id)
     .then((project) => {
+      if (project === null)
+        res.status(404).json({ message: "Project not found" });
       res.json(project);
     })
     .catch((err) => {
@@ -20,7 +22,7 @@ const getProjectById = async (req, res) => {
     });
 };
 
-const createProject = async (req, res) => {
+const createProject = (req, res) => {
   Project.create(req.body)
     .then((project) => {
       res.json(project);
@@ -30,10 +32,14 @@ const createProject = async (req, res) => {
     });
 };
 
-const updateProject = async (req, res) => {
+const updateProject = (req, res) => {
   Project.findByPk(req.params.id)
     .then((project) => {
-      return project.update(req.body);
+      if (project === null) {
+        res.status(404).json({ message: "Project not found" });
+      } else {
+        return project.update(req.body);
+      }
     })
     .then((project) => {
       res.json(project);
@@ -43,20 +49,24 @@ const updateProject = async (req, res) => {
     });
 };
 
-const deleteProject = async (req, res) => {
+const deleteProject = (req, res) => {
   Project.findByPk(req.params.id)
     .then((project) => {
-      return project.destroy();
+      if (project === null) {
+        res.status(404).json({ message: "Project not found" });
+      } else {
+        return project.destroy();
+      }
     })
     .then(() => {
       res.end();
     })
     .catch((err) => {
-      res.status(404).json({ message: err.message });
+      res.status(500).json({ message: err.message });
     });
 };
 
-const deleteAllProjects = async (req, res) => {
+const deleteAllProjects = (req, res) => {
   Project.destroy({
     where: {},
     truncate: false,
