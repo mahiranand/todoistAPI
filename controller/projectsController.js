@@ -1,6 +1,6 @@
 import Project from "../model/Projects.model.js";
 
-const getAllProjects = (req, res) => {
+export const getAllProjects = (req, res) => {
   Project.findAll()
     .then((projects) => {
       res.json(projects);
@@ -10,7 +10,7 @@ const getAllProjects = (req, res) => {
     });
 };
 
-const getProjectById = (req, res) => {
+export const getProjectById = (req, res) => {
   Project.findByPk(req.params.id)
     .then((project) => {
       if (project === null) {
@@ -24,7 +24,7 @@ const getProjectById = (req, res) => {
     });
 };
 
-const createProject = (req, res) => {
+export const createProject = (req, res) => {
   Project.create(req.body)
     .then((project) => {
       res.json(project);
@@ -34,7 +34,7 @@ const createProject = (req, res) => {
     });
 };
 
-const updateProject = (req, res) => {
+export const updateProject = (req, res) => {
   Project.findByPk(req.params.id)
     .then((project) => {
       if (project === null) {
@@ -51,7 +51,7 @@ const updateProject = (req, res) => {
     });
 };
 
-const deleteProject = (req, res) => {
+export const deleteProject = (req, res) => {
   Project.findByPk(req.params.id)
     .then((project) => {
       if (project === null) {
@@ -68,7 +68,7 @@ const deleteProject = (req, res) => {
     });
 };
 
-const deleteAllProjects = (req, res) => {
+export const deleteAllProjects = (req, res) => {
   Project.destroy({
     where: {},
     truncate: false,
@@ -81,11 +81,4 @@ const deleteAllProjects = (req, res) => {
     });
 };
 
-export {
-  createProject,
-  deleteAllProjects,
-  deleteProject,
-  getAllProjects,
-  getProjectById,
-  updateProject,
-};
+

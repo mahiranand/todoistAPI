@@ -1,4 +1,4 @@
-import sequelize from "../config/config";
+import sequelize from "../config/config.js";
 import { DataTypes } from "sequelize";
 
 const Tasks = sequelize.define(
@@ -78,8 +78,16 @@ const Tasks = sequelize.define(
       type: DataTypes.STRING,
       defaultValue: null,
     },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
-    updatedAt: false,
+    timestamps: false,
   }
 );
+
+sequelize.sync();
+
+export default Tasks;
