@@ -1,4 +1,4 @@
-import Project from "../model/Project.model.js";
+import Project from "../model/Projects.model.js";
 
 const getAllProjects = (req, res) => {
   Project.findAll()

@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import sequelize from "../config/config.js";
 
 const Project = sequelize.define(
-  "Project",
+  "Projects",
   {
     id: {
       type: DataTypes.UUID,
