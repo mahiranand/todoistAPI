@@ -25,13 +25,17 @@ export const getProjectById = (req, res) => {
 };
 
 export const createProject = (req, res) => {
-  Project.create(req.body)
-    .then((project) => {
-      res.json(project);
-    })
-    .catch((err) => {
-      res.status(500).json({ message: err.message });
-    });
+  if (req.body.name === undefined) {
+    res.json({ message: "Please provide name" });
+  } else {
+    Project.create(req.body)
+      .then((project) => {
+        res.json(project);
+      })
+      .catch((err) => {
+        res.status(500).json({ message: err.message });
+      });
+  }
 };
 
 export const updateProject = (req, res) => {
@@ -61,7 +65,7 @@ export const deleteProject = (req, res) => {
       }
     })
     .then(() => {
-      res.end();
+      res.status(204).end();
     })
     .catch((err) => {
       res.status(500).json({ message: err.message });
@@ -74,11 +78,9 @@ export const deleteAllProjects = (req, res) => {
     truncate: false,
   })
     .then(() => {
-      res.end();
+      res.status(204).end();
     })
     .catch((err) => {
       res.status(500).json({ message: err.message });
     });
 };
-
-

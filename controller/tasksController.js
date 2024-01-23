@@ -15,27 +15,31 @@ export const getActiveTasks = (req, res) => {
 };
 
 export const createNewTask = (req, res) => {
-  const task = {
-    ...req.body,
-    due: {
-      date: req.body.due_date,
-      is_recurring: false,
-      string: req.body.due_string,
-      datetime: req.body.due_datetime,
-    },
-    project_id: req.params.projectId,
-    duration: {
-      amount: req.body.duration,
-      unit: req.body.duration_unit,
-    },
-  };
-  Tasks.create(task)
-    .then((task) => {
-      res.json(task);
-    })
-    .catch((err) => {
-      res.status(500).json({ message: err.message });
-    });
+  if (req.body.content === undefined) {
+    res.json({ message: "Please provide content" });
+  } else {
+    const task = {
+      ...req.body,
+      due: {
+        date: req.body.due_date,
+        is_recurring: false,
+        string: req.body.due_string,
+        datetime: req.body.due_datetime,
+      },
+      project_id: req.params.projectId,
+      duration: {
+        amount: req.body.duration,
+        unit: req.body.duration_unit,
+      },
+    };
+    Tasks.create(task)
+      .then((task) => {
+        res.json(task);
+      })
+      .catch((err) => {
+        res.status(500).json({ message: err.message });
+      });
+  }
 };
 
 export const getActiveTaskById = (req, res) => {
@@ -118,7 +122,7 @@ export const deleteATask = (req, res) => {
       }
     })
     .then(() => {
-      res.end();
+      res.status(204).end();
     })
     .catch((err) => {
       res.status(500).json({ message: err.message });
