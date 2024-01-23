@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/config.js";
 
-const Project = sequelize.define(
+const Projects = sequelize.define(
   "Projects",
   {
     id: {
@@ -61,4 +61,4 @@ const Project = sequelize.define(
 
 sequelize.sync();
 
-export default Project;
+export default Projects;
