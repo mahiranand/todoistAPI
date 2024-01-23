@@ -13,9 +13,11 @@ const getAllProjects = (req, res) => {
 const getProjectById = (req, res) => {
   Project.findByPk(req.params.id)
     .then((project) => {
-      if (project === null)
+      if (project === null) {
         res.status(404).json({ message: "Project not found" });
-      res.json(project);
+      } else {
+        res.json(project);
+      }
     })
     .catch((err) => {
       res.status(500).json({ message: err.message });
