@@ -29,8 +29,8 @@ export const getComments = (req, res) => {
 };
 
 export const createComment = (req, res) => {
-  if (req.body.content === undefined) {
-    res.json({ message: "Please provide content" });
+  if (req.body.content === undefined || req.body.content.trim() === "") {
+    res.status(400).json({ message: "Please provide content" });
   } else if (req.query.task_id && req.query.project_id) {
     res.json({ message: "Please provide either task_id or project_id" });
   } else if (req.query.task_id) {

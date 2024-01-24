@@ -11,7 +11,7 @@ export const getAllLabels = (req, res) => {
 };
 
 export const createLabel = (req, res) => {
-  if (!req.body.name) {
+  if (!req.body.name || req.body.name.trim() === "") {
     res.status(400).json({ message: "Name can not be empty!" });
     return;
   } else {

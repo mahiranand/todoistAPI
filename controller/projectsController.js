@@ -25,8 +25,8 @@ export const getProjectById = (req, res) => {
 };
 
 export const createProject = (req, res) => {
-  if (req.body.name === undefined) {
-    res.json({ message: "Please provide name" });
+  if (req.body.name === undefined || req.body.name.trim() === "") {
+    res.status(400).json({ message: "Please provide name" });
   } else {
     Project.create(req.body)
       .then((project) => {

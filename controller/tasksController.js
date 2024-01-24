@@ -15,8 +15,8 @@ export const getActiveTasks = (req, res) => {
 };
 
 export const createNewTask = (req, res) => {
-  if (req.body.content === undefined) {
-    res.json({ message: "Please provide content" });
+  if (req.body.content === undefined || req.body.content.trim() === "") {
+    res.status(400).json({ message: "Please provide content" });
   } else {
     const task = {
       ...req.body,
