@@ -1,4 +1,6 @@
-import Project from "../model/Projects.model.js";
+import db from "../config/config.js";
+
+const Project = db.Projects;
 
 export const getAllProjects = (req, res) => {
   Project.findAll()

@@ -1,4 +1,6 @@
-import Labels from "../model/Labels.model.js";
+import db from "../config/config.js";
+
+const Labels = db.Labels;
 
 export const getAllLabels = (req, res) => {
   Labels.findAll()

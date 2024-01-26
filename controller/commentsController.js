@@ -1,4 +1,6 @@
-import Comments from "../model/Comments.model.js";
+import db from "../config/config.js";
+
+const Comments = db.Comments;
 
 export const getComments = (req, res) => {
   if (req.query.task_id && req.query.project_id) {

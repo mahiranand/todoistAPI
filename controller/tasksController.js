@@ -1,4 +1,6 @@
-import Tasks from "../model/Tasks.model.js";
+import db from "../config/config.js";
+
+const Tasks = db.Tasks;
 
 export const getActiveTasks = (req, res) => {
   Tasks.findAll({
