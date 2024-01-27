@@ -12,14 +12,6 @@ export const commentsModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      task_id: {
-        type: DataTypes.STRING,
-        defaultValue: null,
-      },
-      project_id: {
-        type: DataTypes.STRING,
-        defaultValue: null,
-      },
       attachment: {
         type: DataTypes.JSONB,
         defaultValue: null,

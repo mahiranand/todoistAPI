@@ -60,10 +60,6 @@ export const tasksModel = (sequelize, DataTypes) => {
           max: 4,
         },
       },
-      project_id: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       section_id: {
         type: DataTypes.STRING,
         defaultValue: null,
