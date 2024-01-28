@@ -76,6 +76,15 @@ export const tasksModel = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
+      project_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+          model: "Projects",
+          key: "id",
+          onDelete: "CASCADE",
+        },
+      },
     },
     {
       timestamps: false,
