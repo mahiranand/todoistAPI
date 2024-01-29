@@ -25,7 +25,7 @@ export const authUser = (req, res, next) => {
             message: "User not found!",
           });
         }
-        req.userID = data.id;
+        req.user_id = data.id;
         next();
       })
       .catch((err) => {

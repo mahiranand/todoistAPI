@@ -3,7 +3,7 @@ import db from "../config/config.js";
 const Project = db.Projects;
 
 export const getAllProjects = (req, res) => {
-  const userId = req.userID;
+  const userId = req.user_id;
   Project.findAll({ where: { user_id: userId } })
     .then((projects) => {
       res.json(projects);
@@ -31,7 +31,7 @@ export const createProject = (req, res) => {
   if (req.body.name === undefined || req.body.name.trim() === "") {
     res.status(400).json({ message: "Please provide name" });
   } else {
-    Project.create(req.body)
+    Project.create({ ...req.body, user_id: req.user_id })
       .then((project) => {
         res.json(project);
       })
@@ -46,6 +46,8 @@ export const updateProject = (req, res) => {
     .then((project) => {
       if (project === null) {
         res.status(404).json({ message: "Project not found" });
+      } else if ((project.user_id = req.user_id)) {
+        res.status(403).json({ message: "Forbidden" });
       } else {
         return project.update(req.body);
       }
@@ -63,6 +65,8 @@ export const deleteProject = (req, res) => {
     .then((project) => {
       if (project === null) {
         res.status(404).json({ message: "Project not found" });
+      } else if (project.user_id !== req.user_id) {
+        res.status(403).json({ message: "Forbidden" });
       } else {
         return project.destroy();
       }
@@ -77,7 +81,7 @@ export const deleteProject = (req, res) => {
 
 export const deleteAllProjects = (req, res) => {
   Project.destroy({
-    where: {},
+    where: { user_id: req.user_id },
     truncate: false,
   })
     .then(() => {
