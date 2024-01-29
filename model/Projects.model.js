@@ -51,6 +51,15 @@ export const projectsModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         defaultValue: null,
       },
+      user_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+          model: "Users",
+          key: "id",
+          onDelete: "CASCADE",
+        },
+      },
     },
     {
       timestamps: false,
