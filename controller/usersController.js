@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import db from "../config/config.js";
-import 'dotenv/config';
+import "dotenv/config";
 
 const User = db.Users;
 
@@ -27,6 +27,42 @@ export const registerUser = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: err.message || "Error occurred while registering user!",
+      });
+    });
+};
+
+export const loginUser = (req, res) => {
+  User.findOne({ where: { username: req.body.username } })
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: "User not found!",
+        });
+        return;
+      }
+
+      const passwordIsValid = bcrypt.compareSync(
+        req.body.password,
+        data.password
+      );
+
+      if (!passwordIsValid) {
+        res.status(401).send({
+          message: "Invalid password!",
+        });
+        return;
+      }
+
+      const token = createToken(data);
+
+      res.status(200).send({
+        message: "User logged in successfully!",
+        token: token,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Error occurred while logging in user!",
       });
     });
 };

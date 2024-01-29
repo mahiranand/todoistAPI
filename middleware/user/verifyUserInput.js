@@ -45,3 +45,27 @@ export const verifySignUp = (req, res, next) => {
       return;
     });
 };
+
+export const verifyLogin = (req, res, next) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    res.status(400).send({
+      message: "Content can not be empty!",
+    });
+    return;
+  }
+
+  if (
+    username == "" ||
+    username.trim() == "" ||
+    password == "" ||
+    password.trim() == ""
+  ) {
+    res.status(400).send({
+      message: "Content can not be empty!",
+    });
+    return;
+  }
+  next();
+};
