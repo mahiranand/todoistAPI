@@ -3,7 +3,8 @@ import db from "../config/config.js";
 const Project = db.Projects;
 
 export const getAllProjects = (req, res) => {
-  Project.findAll()
+  const userId = req.userID;
+  Project.findAll({ where: { user_id: userId } })
     .then((projects) => {
       res.json(projects);
     })
